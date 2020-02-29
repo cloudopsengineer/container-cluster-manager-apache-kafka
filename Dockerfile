@@ -4,11 +4,12 @@ LABEL author "Giuseppe Iannelli"
 LABEL description "Docker image for CMAK (Cluster Manager for Apache Kafka, previously known as Kafka Manager. Developed by yahoo https://github.com/yahoo/CMAK)"
 
 ARG KM_VERSION=2.0.0.2
-ENV KM_USERNAME admin
-ENV KM_PASSWORD password
+ENV KAFKA_MANAGER_AUTH_ENABLED "true"
+ENV KAFKA_MANAGER_USERNAME admin
+ENV KAFKA_MANAGER_PASSWORD p4ssw0rd
 ENV ZK_HOSTS zookeeper:2181
-ENV KAFKA_NUMBER_OF_BROKERS 1
-ENV KAFKA_TOTAL_PARTITIONS_NUMBER 50
+ENV KAFKA_NUMBER_OF_BROKERS 3
+ENV KAFKA_TOTAL_PARTITIONS_NUMBER 100
 
 WORKDIR /tmp
 
@@ -23,7 +24,7 @@ RUN ./sbt clean dist
 
 RUN unzip -d /opt ./target/universal/kafka-manager-${KM_VERSION}.zip \
     && mv /opt/kafka-manager-${KM_VERSION} /opt/CMAK \
-    && chown -R root:0 /opt/CMAK \
+    && chown -R 1000:100 /opt/CMAK \
     && chmod -R 775 /opt/CMAK 
 
 RUN rm -rf /tmp/CMAK-${KM_VERSION}.tar.gz /tmp/CMAK-${KM_VERSION}  $HOME/.sbt $HOME/.ivy2 
