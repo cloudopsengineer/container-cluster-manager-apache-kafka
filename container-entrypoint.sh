@@ -5,6 +5,8 @@ if [ "${1#-}" != "$1" ]
 then
   echo "[INFO] Set value into /opt/CMAK/conf/application.conf"
 
+  echo "application.home=/opt/CMAK" >> /opt/CMAK/conf/application.conf
+
   echo "kafka-manager.offset-cache-thread-pool-size=$((2+nproc))"  >> /opt/CMAK/conf/application.conf
   echo "kafka-manager.offset-cache-thread-pool-size=$((10+nproc))"  >> /opt/CMAK/conf/application.conf
   echo "kafka-manager.kafka-admin-client-thread-pool-size=$((2+nproc))" >> /opt/CMAK/conf/application.conf

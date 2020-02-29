@@ -23,7 +23,8 @@ RUN ./sbt clean dist
 
 RUN unzip -d /opt ./target/universal/kafka-manager-${KM_VERSION}.zip \
     && mv /opt/kafka-manager-${KM_VERSION} /opt/CMAK \
-    && chown -R 1000:100 /opt/CMAK
+    && chown -R root:0 /opt/CMAK \
+    && chmod -R 775 /opt/CMAK 
 
 RUN rm -rf /tmp/CMAK-${KM_VERSION}.tar.gz /tmp/CMAK-${KM_VERSION}  $HOME/.sbt $HOME/.ivy2 
 
@@ -33,7 +34,6 @@ EXPOSE 8080
 
 WORKDIR /opt/CMAK
 USER 1000
-ENV HOME=/opt/CMAK
 
 ENTRYPOINT ["/bin/sh", "/usr/local/bin/container-entrypoint.sh"]
 CMD ["-Dhttp.port=8080"]
