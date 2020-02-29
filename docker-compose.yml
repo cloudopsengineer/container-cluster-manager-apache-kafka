@@ -1,0 +1,10 @@
+version: '3.1'
+
+services:
+  cluster-manager-apache-kafka:
+    image: cloudopsengineer/cluster-manager-apache-kafka
+    container_name: cluster-manager-apache-kafka
+    ports:
+      - 8080:8080
+    environment:
+      ZK_HOSTS: zookeeper:2181
